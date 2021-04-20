@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Vss2Git")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("HPDI, LLC")]
+[assembly: AssemblyCompany("Test-Fuchs GmbH")]
 [assembly: AssemblyProduct("Vss2Git")]
 [assembly: AssemblyCopyright("Copyright ©  2009 HPDI, LLC")]
 [assembly: AssemblyTrademark("")]
