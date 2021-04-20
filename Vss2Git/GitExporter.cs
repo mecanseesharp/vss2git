@@ -128,10 +128,15 @@ namespace Hpdi.Vss2Git
 
                 var pathMapper = new VssPathMapper();
 
+                int rootprojectcount = 0;
+
+                foreach (var item in revisionAnalyzer.RootProjects)
+                    rootprojectcount++;
+
                 // create mappings for root projects
                 foreach (var rootProject in revisionAnalyzer.RootProjects)
                 {
-                    var rootPath = VssPathMapper.GetWorkingPath(repoPath, rootProject.Path);
+                    var rootPath = rootprojectcount > 1 ? VssPathMapper.GetWorkingPath(repoPath, rootProject.Path) : repoPath;
                     pathMapper.SetProjectPath(rootProject.PhysicalName, rootPath, rootProject.Path);
                 }
 
