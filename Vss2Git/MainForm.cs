@@ -44,6 +44,26 @@ namespace Hpdi.Vss2Git
             logger = string.IsNullOrEmpty(filename) ? Logger.Null : new Logger(filename);
         }
 
+        private void vssDirButton_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            fbd.Description = "Choose folder with VSS Database";
+            fbd.ShowNewFolderButton = false;
+
+            if (fbd.ShowDialog() == DialogResult.OK)
+                vssDirTextBox.Text = fbd.SelectedPath;
+        }
+
+        private void outDirButton_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            fbd.Description = "Choose Outputfolder";
+            fbd.ShowNewFolderButton = true;
+
+            if (fbd.ShowDialog() == DialogResult.OK)
+                outDirTextBox.Text = fbd.SelectedPath;
+        }
+
         private void goButton_Click(object sender, EventArgs e)
         {
             try

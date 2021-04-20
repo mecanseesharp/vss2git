@@ -48,6 +48,7 @@
             this.changeLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.timeLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.outputGroupBox = new System.Windows.Forms.GroupBox();
+            this.ignoreErrorsCheckBox = new System.Windows.Forms.CheckBox();
             this.commentTextBox = new System.Windows.Forms.TextBox();
             this.commentLabel = new System.Windows.Forms.Label();
             this.forceAnnotatedCheckBox = new System.Windows.Forms.CheckBox();
@@ -66,7 +67,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.anyCommentUpDown = new System.Windows.Forms.NumericUpDown();
-            this.ignoreErrorsCheckBox = new System.Windows.Forms.CheckBox();
+            this.vssDirButton = new System.Windows.Forms.Button();
+            this.outDirButton = new System.Windows.Forms.Button();
             this.vssGroupBox.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.outputGroupBox.SuspendLayout();
@@ -77,8 +79,9 @@
             // 
             // vssGroupBox
             // 
-            this.vssGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.vssGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.vssGroupBox.Controls.Add(this.vssDirButton);
             this.vssGroupBox.Controls.Add(this.encodingLabel);
             this.vssGroupBox.Controls.Add(this.encodingComboBox);
             this.vssGroupBox.Controls.Add(this.excludeTextBox);
@@ -231,8 +234,9 @@
             // 
             // outputGroupBox
             // 
-            this.outputGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.outputGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.outputGroupBox.Controls.Add(this.outDirButton);
             this.outputGroupBox.Controls.Add(this.ignoreErrorsCheckBox);
             this.outputGroupBox.Controls.Add(this.commentTextBox);
             this.outputGroupBox.Controls.Add(this.commentLabel);
@@ -250,6 +254,17 @@
             this.outputGroupBox.TabIndex = 1;
             this.outputGroupBox.TabStop = false;
             this.outputGroupBox.Text = "Output Settings";
+            // 
+            // ignoreErrorsCheckBox
+            // 
+            this.ignoreErrorsCheckBox.AutoSize = true;
+            this.ignoreErrorsCheckBox.Location = new System.Drawing.Point(421, 123);
+            this.ignoreErrorsCheckBox.Name = "ignoreErrorsCheckBox";
+            this.ignoreErrorsCheckBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.ignoreErrorsCheckBox.Size = new System.Drawing.Size(101, 17);
+            this.ignoreErrorsCheckBox.TabIndex = 8;
+            this.ignoreErrorsCheckBox.Text = "Ignore Git errors";
+            this.ignoreErrorsCheckBox.UseVisualStyleBackColor = true;
             // 
             // commentTextBox
             // 
@@ -433,17 +448,26 @@
             this.anyCommentUpDown.Name = "anyCommentUpDown";
             this.anyCommentUpDown.Size = new System.Drawing.Size(54, 20);
             this.anyCommentUpDown.TabIndex = 1;
-            //
-            // ignoreErrorsCheckBox
-            //
-            this.ignoreErrorsCheckBox.AutoSize = true;
-            this.ignoreErrorsCheckBox.Location = new System.Drawing.Point(422, 97);
-            this.ignoreErrorsCheckBox.Name = "ignoreErrorsCheckBox";
-            this.ignoreErrorsCheckBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.ignoreErrorsCheckBox.Size = new System.Drawing.Size(101, 17);
-            this.ignoreErrorsCheckBox.TabIndex = 8;
-            this.ignoreErrorsCheckBox.Text = "Ignore Git errors";
-            this.ignoreErrorsCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // vssDirButton
+            // 
+            this.vssDirButton.Location = new System.Drawing.Point(498, 19);
+            this.vssDirButton.Name = "vssDirButton";
+            this.vssDirButton.Size = new System.Drawing.Size(24, 20);
+            this.vssDirButton.TabIndex = 8;
+            this.vssDirButton.Text = "...";
+            this.vssDirButton.UseVisualStyleBackColor = true;
+            this.vssDirButton.Click += new System.EventHandler(this.vssDirButton_Click);
+            // 
+            // outDirButton
+            // 
+            this.outDirButton.Location = new System.Drawing.Point(498, 19);
+            this.outDirButton.Name = "outDirButton";
+            this.outDirButton.Size = new System.Drawing.Size(24, 20);
+            this.outDirButton.TabIndex = 9;
+            this.outDirButton.Text = "...";
+            this.outDirButton.UseVisualStyleBackColor = true;
+            this.outDirButton.Click += new System.EventHandler(this.outDirButton_Click);
             // 
             // MainForm
             // 
@@ -519,6 +543,8 @@
         private System.Windows.Forms.CheckBox ignoreErrorsCheckBox;
         private System.Windows.Forms.TextBox commentTextBox;
         private System.Windows.Forms.Label commentLabel;
+        private System.Windows.Forms.Button vssDirButton;
+        private System.Windows.Forms.Button outDirButton;
     }
 }
 
