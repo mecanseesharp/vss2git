@@ -15,7 +15,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
@@ -35,11 +37,13 @@ namespace Hpdi.Vss2Git
         private RevisionAnalyzer revisionAnalyzer;
         private ChangesetBuilder changesetBuilder;
 
-        private List<VssToGitUser> userMapping = new List<VssToGitUser>();
+        private BindingList<VssToGitUser> userMapping = new BindingList<VssToGitUser>();
 
         public MainForm()
         {
             InitializeComponent();
+
+            userMappingDataGridView.DataSource = userMapping;
         }
 
         private void OpenLog(string filename)
@@ -134,7 +138,7 @@ namespace Hpdi.Vss2Git
                 if (!string.IsNullOrEmpty(outDirTextBox.Text))
                 {
                     var gitExporter = new GitExporter(workQueue, logger,
-                        revisionAnalyzer, changesetBuilder, userMapping);
+                        revisionAnalyzer, changesetBuilder, userMapping.ToList());
                     if (!string.IsNullOrEmpty(domainTextBox.Text))
                     {
                         gitExporter.EmailDomain = domainTextBox.Text;
@@ -252,6 +256,62 @@ namespace Hpdi.Vss2Git
             workQueue.WaitIdle();
         }
 
+        private void addUserButton_Click(object sender, EventArgs e)
+        {
+            var userform = new UserEditForm(userMapping.ToList());
+
+            if (userform.ShowDialog() == DialogResult.OK)
+            {
+                ((BindingList<VssToGitUser>)userMappingDataGridView.DataSource).Add(userform.User);
+                WriteSettings();
+            }
+        }
+
+        private void editUserButton_Click(object sender, EventArgs e)
+        {
+            if (userMappingDataGridView.SelectedRows != null && userMappingDataGridView.SelectedRows.Count == 1)
+            {
+                editUser((VssToGitUser)userMappingDataGridView.SelectedRows[0].DataBoundItem);
+            }
+        }
+
+        private void userMappingDataGridView_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                if (userMappingDataGridView.CurrentRow != null && userMappingDataGridView.CurrentRow.DataBoundItem != null)
+                {
+                    editUser((VssToGitUser)userMappingDataGridView.CurrentRow.DataBoundItem);
+                }
+            }
+        }
+
+        private void userMappingDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.RowIndex > (userMapping.Count - 1))
+                return;
+
+            var edituser = userMapping[e.RowIndex];
+
+            editUser(edituser);
+        }
+
+        private void userMappingDataGridView_UserDeletedRow(object sender, DataGridViewRowEventArgs e)
+        {
+            WriteSettings();
+        }
+
+        private void editUser(VssToGitUser user)
+        {
+            var userform = new UserEditForm(user, userMapping.ToList());
+
+            if (userform.ShowDialog() == DialogResult.OK)
+            {
+                userMappingDataGridView.Refresh();
+                WriteSettings();
+            }
+        }
+
         private void ReadSettings()
         {
             var settings = Properties.Settings.Default;
@@ -275,7 +335,7 @@ namespace Hpdi.Vss2Git
                     {
                         var newUser = new VssToGitUser(item);
 
-                        var exUser = userMapping.Find(x => string.Equals(x.VssName, newUser.VssName, StringComparison.OrdinalIgnoreCase));
+                        var exUser = userMapping?.FirstOrDefault(x => string.Equals(x.VssName, newUser.VssName, StringComparison.OrdinalIgnoreCase));
 
                         if (exUser == null)
                             userMapping.Add(newUser);
@@ -312,5 +372,7 @@ namespace Hpdi.Vss2Git
 
             settings.Save();
         }
+
+
     }
 }

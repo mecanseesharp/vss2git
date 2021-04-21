@@ -4,6 +4,11 @@ namespace Hpdi.Vss2Git
 {
     public class VssToGitUser
     {
+        public VssToGitUser()
+        {
+
+        }
+
         public VssToGitUser(string vssName, string name, string eMail)
         {
             VssName = vssName;

@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.vssGroupBox = new System.Windows.Forms.GroupBox();
+            this.vssDirButton = new System.Windows.Forms.Button();
             this.encodingLabel = new System.Windows.Forms.Label();
             this.encodingComboBox = new System.Windows.Forms.ComboBox();
             this.excludeTextBox = new System.Windows.Forms.TextBox();
@@ -48,6 +49,7 @@
             this.changeLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.timeLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.outputGroupBox = new System.Windows.Forms.GroupBox();
+            this.outDirButton = new System.Windows.Forms.Button();
             this.ignoreErrorsCheckBox = new System.Windows.Forms.CheckBox();
             this.commentTextBox = new System.Windows.Forms.TextBox();
             this.commentLabel = new System.Windows.Forms.Label();
@@ -67,14 +69,18 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.anyCommentUpDown = new System.Windows.Forms.NumericUpDown();
-            this.vssDirButton = new System.Windows.Forms.Button();
-            this.outDirButton = new System.Windows.Forms.Button();
+            this.userMappingGroupBox = new System.Windows.Forms.GroupBox();
+            this.editUserButton = new System.Windows.Forms.Button();
+            this.addUserButton = new System.Windows.Forms.Button();
+            this.userMappingDataGridView = new System.Windows.Forms.DataGridView();
             this.vssGroupBox.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.outputGroupBox.SuspendLayout();
             this.changesetGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sameCommentUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.anyCommentUpDown)).BeginInit();
+            this.userMappingGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.userMappingDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // vssGroupBox
@@ -96,6 +102,17 @@
             this.vssGroupBox.TabIndex = 0;
             this.vssGroupBox.TabStop = false;
             this.vssGroupBox.Text = "VSS Settings";
+            // 
+            // vssDirButton
+            // 
+            this.vssDirButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.vssDirButton.Location = new System.Drawing.Point(498, 19);
+            this.vssDirButton.Name = "vssDirButton";
+            this.vssDirButton.Size = new System.Drawing.Size(24, 20);
+            this.vssDirButton.TabIndex = 8;
+            this.vssDirButton.Text = "...";
+            this.vssDirButton.UseVisualStyleBackColor = true;
+            this.vssDirButton.Click += new System.EventHandler(this.vssDirButton_Click);
             // 
             // encodingLabel
             // 
@@ -173,8 +190,8 @@
             // 
             // goButton
             // 
-            this.goButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.goButton.Location = new System.Drawing.Point(384, 381);
+            this.goButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.goButton.Location = new System.Drawing.Point(384, 513);
             this.goButton.Name = "goButton";
             this.goButton.Size = new System.Drawing.Size(75, 23);
             this.goButton.TabIndex = 3;
@@ -194,7 +211,7 @@
             this.revisionLabel,
             this.changeLabel,
             this.timeLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 407);
+            this.statusStrip.Location = new System.Drawing.Point(0, 539);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(552, 22);
             this.statusStrip.TabIndex = 5;
@@ -254,6 +271,17 @@
             this.outputGroupBox.TabIndex = 1;
             this.outputGroupBox.TabStop = false;
             this.outputGroupBox.Text = "Output Settings";
+            // 
+            // outDirButton
+            // 
+            this.outDirButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.outDirButton.Location = new System.Drawing.Point(498, 19);
+            this.outDirButton.Name = "outDirButton";
+            this.outDirButton.Size = new System.Drawing.Size(24, 20);
+            this.outDirButton.TabIndex = 9;
+            this.outDirButton.Text = "...";
+            this.outDirButton.UseVisualStyleBackColor = true;
+            this.outDirButton.Click += new System.EventHandler(this.outDirButton_Click);
             // 
             // ignoreErrorsCheckBox
             // 
@@ -364,9 +392,9 @@
             // 
             // cancelButton
             // 
-            this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(465, 381);
+            this.cancelButton.Location = new System.Drawing.Point(465, 513);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 4;
@@ -451,25 +479,64 @@
             this.anyCommentUpDown.Size = new System.Drawing.Size(54, 20);
             this.anyCommentUpDown.TabIndex = 1;
             // 
-            // vssDirButton
+            // userMappingGroupBox
             // 
-            this.vssDirButton.Location = new System.Drawing.Point(498, 19);
-            this.vssDirButton.Name = "vssDirButton";
-            this.vssDirButton.Size = new System.Drawing.Size(24, 20);
-            this.vssDirButton.TabIndex = 8;
-            this.vssDirButton.Text = "...";
-            this.vssDirButton.UseVisualStyleBackColor = true;
-            this.vssDirButton.Click += new System.EventHandler(this.vssDirButton_Click);
+            this.userMappingGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.userMappingGroupBox.Controls.Add(this.editUserButton);
+            this.userMappingGroupBox.Controls.Add(this.addUserButton);
+            this.userMappingGroupBox.Controls.Add(this.userMappingDataGridView);
+            this.userMappingGroupBox.Location = new System.Drawing.Point(12, 382);
+            this.userMappingGroupBox.Name = "userMappingGroupBox";
+            this.userMappingGroupBox.Size = new System.Drawing.Size(528, 125);
+            this.userMappingGroupBox.TabIndex = 7;
+            this.userMappingGroupBox.TabStop = false;
+            this.userMappingGroupBox.Text = "VSS/Git Usermapping";
             // 
-            // outDirButton
+            // editUserButton
             // 
-            this.outDirButton.Location = new System.Drawing.Point(498, 19);
-            this.outDirButton.Name = "outDirButton";
-            this.outDirButton.Size = new System.Drawing.Size(24, 20);
-            this.outDirButton.TabIndex = 9;
-            this.outDirButton.Text = "...";
-            this.outDirButton.UseVisualStyleBackColor = true;
-            this.outDirButton.Click += new System.EventHandler(this.outDirButton_Click);
+            this.editUserButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.editUserButton.Location = new System.Drawing.Point(447, 48);
+            this.editUserButton.Name = "editUserButton";
+            this.editUserButton.Size = new System.Drawing.Size(75, 23);
+            this.editUserButton.TabIndex = 5;
+            this.editUserButton.Text = "Edit";
+            this.editUserButton.UseVisualStyleBackColor = true;
+            this.editUserButton.Click += new System.EventHandler(this.editUserButton_Click);
+            // 
+            // addUserButton
+            // 
+            this.addUserButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.addUserButton.Location = new System.Drawing.Point(447, 19);
+            this.addUserButton.Name = "addUserButton";
+            this.addUserButton.Size = new System.Drawing.Size(75, 23);
+            this.addUserButton.TabIndex = 4;
+            this.addUserButton.Text = "Add";
+            this.addUserButton.UseVisualStyleBackColor = true;
+            this.addUserButton.Click += new System.EventHandler(this.addUserButton_Click);
+            // 
+            // userMappingDataGridView
+            // 
+            this.userMappingDataGridView.AllowUserToAddRows = false;
+            this.userMappingDataGridView.AllowUserToResizeRows = false;
+            this.userMappingDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.userMappingDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.userMappingDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.userMappingDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.userMappingDataGridView.Location = new System.Drawing.Point(7, 20);
+            this.userMappingDataGridView.Name = "userMappingDataGridView";
+            this.userMappingDataGridView.RowHeadersVisible = false;
+            this.userMappingDataGridView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.userMappingDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.userMappingDataGridView.ShowEditingIcon = false;
+            this.userMappingDataGridView.Size = new System.Drawing.Size(434, 99);
+            this.userMappingDataGridView.TabIndex = 0;
+            this.userMappingDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.userMappingDataGridView_CellDoubleClick);
+            this.userMappingDataGridView.UserDeletedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.userMappingDataGridView_UserDeletedRow);
+            this.userMappingDataGridView.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.userMappingDataGridView_PreviewKeyDown);
             // 
             // MainForm
             // 
@@ -477,7 +544,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(552, 429);
+            this.ClientSize = new System.Drawing.Size(552, 561);
+            this.Controls.Add(this.userMappingGroupBox);
             this.Controls.Add(this.changesetGroupBox);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.outputGroupBox);
@@ -485,12 +553,12 @@
             this.Controls.Add(this.vssGroupBox);
             this.Controls.Add(this.statusStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(568, 468);
+            this.MinimumSize = new System.Drawing.Size(568, 600);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "VSS2Git";
-            this.Load += new System.EventHandler(this.MainForm_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.vssGroupBox.ResumeLayout(false);
             this.vssGroupBox.PerformLayout();
             this.statusStrip.ResumeLayout(false);
@@ -501,6 +569,8 @@
             this.changesetGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sameCommentUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.anyCommentUpDown)).EndInit();
+            this.userMappingGroupBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.userMappingDataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -547,6 +617,10 @@
         private System.Windows.Forms.Label commentLabel;
         private System.Windows.Forms.Button vssDirButton;
         private System.Windows.Forms.Button outDirButton;
+        private System.Windows.Forms.GroupBox userMappingGroupBox;
+        private System.Windows.Forms.DataGridView userMappingDataGridView;
+        private System.Windows.Forms.Button editUserButton;
+        private System.Windows.Forms.Button addUserButton;
     }
 }
 
