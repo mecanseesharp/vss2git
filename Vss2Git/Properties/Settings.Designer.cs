@@ -154,5 +154,16 @@ namespace Hpdi.Vss2Git.Properties {
                 this["DefaultComment"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection VssUserMapping {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["VssUserMapping"]));
+            }
+            set {
+                this["VssUserMapping"] = value;
+            }
+        }
     }
 }

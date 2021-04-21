@@ -40,6 +40,9 @@ namespace Hpdi.Vss2Git
         private bool ignoreErrors = false;
         private string defaultComment = "";
 
+        private List<VssToGitUser> userMapping = new List<VssToGitUser>();
+
+
         private string emailDomain = "localhost";
         public string EmailDomain
         {
@@ -74,12 +77,13 @@ namespace Hpdi.Vss2Git
         }
 
         public GitExporter(WorkQueue workQueue, Logger logger,
-            RevisionAnalyzer revisionAnalyzer, ChangesetBuilder changesetBuilder)
+            RevisionAnalyzer revisionAnalyzer, ChangesetBuilder changesetBuilder, List<VssToGitUser> userMapping)
             : base(workQueue, logger)
         {
             this.database = revisionAnalyzer.Database;
             this.revisionAnalyzer = revisionAnalyzer;
             this.changesetBuilder = changesetBuilder;
+            this.userMapping = userMapping;
         }
 
         public void ExportToGit(string repoPath)
@@ -224,7 +228,8 @@ namespace Hpdi.Vss2Git
                                 if (AbortRetryIgnore(
                                     delegate
                                     {
-                                        git.Tag(tagName, label.User, GetEmail(label.User),
+                                        var taguser = GetGitUser(label.User);
+                                        git.Tag(tagName, taguser.GitName, taguser.GitEMail,
                                             tagComment, label.DateTime);
                                     }))
                                 {
@@ -583,8 +588,9 @@ namespace Hpdi.Vss2Git
             var result = false;
             AbortRetryIgnore(delegate
             {
+                var commituser = GetGitUser(changeset.User);
                 result = git.AddAll() &&
-                    git.Commit(changeset.User, GetEmail(changeset.User),
+                    git.Commit(commituser.GitName, commituser.GitEMail,
                     changeset.Comment ?? DefaultComment, changeset.DateTime);
             });
             return result;
@@ -641,10 +647,14 @@ namespace Hpdi.Vss2Git
             return false;
         }
 
-        private string GetEmail(string user)
+        private VssToGitUser GetGitUser(string user)
         {
-            // TODO: user-defined mapping of user names to email addresses
-            return user.ToLower().Replace(' ', '.') + "@" + emailDomain;
+            var gituser = userMapping.Find(x => string.Equals(user, x.VssName, StringComparison.OrdinalIgnoreCase));
+
+            if (gituser != null)
+                return gituser;
+            else
+                return new VssToGitUser(user, user, $"{user.ToLower()}@{emailDomain}");
         }
 
         private string GetTagFromLabel(string label)

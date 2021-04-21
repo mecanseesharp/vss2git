@@ -35,6 +35,8 @@ namespace Hpdi.Vss2Git
         private RevisionAnalyzer revisionAnalyzer;
         private ChangesetBuilder changesetBuilder;
 
+        private List<VssToGitUser> userMapping = new List<VssToGitUser>();
+
         public MainForm()
         {
             InitializeComponent();
@@ -132,7 +134,7 @@ namespace Hpdi.Vss2Git
                 if (!string.IsNullOrEmpty(outDirTextBox.Text))
                 {
                     var gitExporter = new GitExporter(workQueue, logger,
-                        revisionAnalyzer, changesetBuilder);
+                        revisionAnalyzer, changesetBuilder, userMapping);
                     if (!string.IsNullOrEmpty(domainTextBox.Text))
                     {
                         gitExporter.EmailDomain = domainTextBox.Text;
@@ -264,6 +266,27 @@ namespace Hpdi.Vss2Git
             forceAnnotatedCheckBox.Checked = settings.ForceAnnotatedTags;
             anyCommentUpDown.Value = settings.AnyCommentSeconds;
             sameCommentUpDown.Value = settings.SameCommentSeconds;
+
+            if (settings.VssUserMapping != null)
+            {
+                foreach (var item in settings.VssUserMapping)
+                {
+                    try
+                    {
+                        var newUser = new VssToGitUser(item);
+
+                        var exUser = userMapping.Find(x => string.Equals(x.VssName, newUser.VssName, StringComparison.OrdinalIgnoreCase));
+
+                        if (exUser == null)
+                            userMapping.Add(newUser);
+                        else
+                            MessageBox.Show($"SourceSafe User '{newUser.VssName}' is defined twice in the settings, only {exUser.GitName}({exUser.GitEMail}) will be used!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    catch (Exception ex)
+                    {
+                    }
+                }
+            }
         }
 
         private void WriteSettings()
@@ -279,6 +302,14 @@ namespace Hpdi.Vss2Git
             settings.ForceAnnotatedTags = forceAnnotatedCheckBox.Checked;
             settings.AnyCommentSeconds = (int)anyCommentUpDown.Value;
             settings.SameCommentSeconds = (int)sameCommentUpDown.Value;
+
+            settings.VssUserMapping = new System.Collections.Specialized.StringCollection();
+
+            foreach (var item in userMapping)
+            {
+                settings.VssUserMapping.Add(item.ToString());
+            }
+
             settings.Save();
         }
     }
