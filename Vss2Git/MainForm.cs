@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
@@ -41,6 +42,9 @@ namespace Hpdi.Vss2Git
 
         private void OpenLog(string filename)
         {
+            if (!Directory.Exists(Path.GetDirectoryName(filename)))
+                Directory.CreateDirectory(Path.GetDirectoryName(filename));
+
             logger = string.IsNullOrEmpty(filename) ? Logger.Null : new Logger(filename);
         }
 
