@@ -244,10 +244,16 @@ namespace Hpdi.Vss2Git
 
                 stopwatch.Stop();
 
+                var exporttime = new TimeSpan(stopwatch.ElapsedTicks);
+                var exporttimestr = $"{exporttime.Days}d {exporttime:hh\\:mm\\:ss}";
+
+                var replaytime = new TimeSpan(replayStopwatch.ElapsedTicks);
+                var replaytimestr = $"{replaytime.Days}d {replaytime:hh\\:mm\\:ss}";
+
                 logger.WriteSectionSeparator();
-                logger.WriteLine("Git export complete in {0:HH:mm:ss}", new DateTime(stopwatch.ElapsedTicks));
-                logger.WriteLine("Replay time: {0:HH:mm:ss}", new DateTime(replayStopwatch.ElapsedTicks));
-                logger.WriteLine("Git time: {0:HH:mm:ss}", new DateTime(git.ElapsedTime.Ticks));
+                logger.WriteLine($"Git export complete in {exporttimestr}");
+                logger.WriteLine($"Replay time: {replaytimestr}");
+                logger.WriteLine($"Git time: {git.ElapsedTime.Days}d {git.ElapsedTime:hh\\:mm\\:ss}");
                 logger.WriteLine("Git commits: {0}", commitCount);
                 logger.WriteLine("Git tags: {0}", tagCount);
             });
