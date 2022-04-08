@@ -342,7 +342,7 @@ namespace Hpdi.Vss2Git
                                     stdoutBuffer.AppendLine();
                                 }
                                 stdoutBuffer.Append(line);
-                                logger.Write('>');
+                                line = $">{line}";
                             }
                             else
                             {
@@ -355,7 +355,7 @@ namespace Hpdi.Vss2Git
                                         stderrBuffer.AppendLine();
                                     }
                                     stderrBuffer.Append(line);
-                                    logger.Write('!');
+                                    line = $"!{line}";
                                 }
                                 else
                                 {

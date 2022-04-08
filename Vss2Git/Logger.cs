@@ -182,6 +182,7 @@ namespace Hpdi.Vss2Git
         {
             if (baseStream != null)
             {
+                WriteDateTime();
                 WriteInternal(value.ToString());
                 WriteLine();
             }
@@ -191,6 +192,7 @@ namespace Hpdi.Vss2Git
         {
             if (baseStream != null)
             {
+                WriteDateTime();
                 WriteInternal(value.ToString());
                 WriteLine();
             }
@@ -200,6 +202,7 @@ namespace Hpdi.Vss2Git
         {
             if (baseStream != null && buffer != null)
             {
+                WriteDateTime();
                 WriteInternal(buffer, 0, buffer.Length);
                 WriteLine();
             }
@@ -209,6 +212,7 @@ namespace Hpdi.Vss2Git
         {
             if (baseStream != null)
             {
+                WriteDateTime();
                 WriteInternal(value.ToString());
                 WriteLine();
             }
@@ -218,6 +222,7 @@ namespace Hpdi.Vss2Git
         {
             if (baseStream != null)
             {
+                WriteDateTime();
                 WriteInternal(value.ToString());
                 WriteLine();
             }
@@ -227,6 +232,7 @@ namespace Hpdi.Vss2Git
         {
             if (baseStream != null)
             {
+                WriteDateTime();
                 WriteInternal(value.ToString());
                 WriteLine();
             }
@@ -236,6 +242,7 @@ namespace Hpdi.Vss2Git
         {
             if (baseStream != null)
             {
+                WriteDateTime();
                 WriteInternal(value.ToString());
                 WriteLine();
             }
@@ -245,6 +252,7 @@ namespace Hpdi.Vss2Git
         {
             if (baseStream != null)
             {
+                WriteDateTime();
                 WriteInternal(value.ToString());
                 WriteLine();
             }
@@ -254,6 +262,7 @@ namespace Hpdi.Vss2Git
         {
             if (baseStream != null)
             {
+                WriteDateTime();
                 WriteInternal(value.ToString());
                 WriteLine();
             }
@@ -263,6 +272,7 @@ namespace Hpdi.Vss2Git
         {
             if (baseStream != null)
             {
+                WriteDateTime();
                 WriteInternal(value);
                 WriteLine();
             }
@@ -272,6 +282,7 @@ namespace Hpdi.Vss2Git
         {
             if (baseStream != null)
             {
+                WriteDateTime();
                 WriteInternal(value.ToString());
                 WriteLine();
             }
@@ -281,6 +292,7 @@ namespace Hpdi.Vss2Git
         {
             if (baseStream != null)
             {
+                WriteDateTime();
                 WriteInternal(value.ToString());
                 WriteLine();
             }
@@ -290,6 +302,7 @@ namespace Hpdi.Vss2Git
         {
             if (baseStream != null && arg != null)
             {
+                WriteDateTime();
                 WriteInternal(string.Format(formatProvider, format, arg));
                 WriteLine();
             }
@@ -299,6 +312,7 @@ namespace Hpdi.Vss2Git
         {
             if (baseStream != null && buffer != null)
             {
+                WriteDateTime();
                 WriteInternal(buffer, index, count);
                 WriteLine();
             }
@@ -306,7 +320,19 @@ namespace Hpdi.Vss2Git
 
         public void WriteSectionSeparator()
         {
-            WriteLine(sectionSeparator);
+            if (baseStream != null)
+            {
+                WriteInternal(sectionSeparator);
+                WriteLine();
+            }
+        }
+
+        private void WriteDateTime()
+        {
+            if (baseStream != null)
+            {
+                WriteInternal($"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")} | ");
+            }
         }
 
         private void WriteInternal(string value)
