@@ -48,8 +48,9 @@ namespace Hpdi.Vss2Git
 
         private void OpenLog(string filename)
         {
-            if (!Directory.Exists(Path.GetDirectoryName(filename)))
-                Directory.CreateDirectory(Path.GetDirectoryName(filename));
+            string logpath = Path.GetDirectoryName(Path.GetFullPath(filename));
+            if (!Directory.Exists(logpath))
+                Directory.CreateDirectory(logpath);
 
             logger = string.IsNullOrEmpty(filename) ? Logger.Null : new Logger(filename);
         }
