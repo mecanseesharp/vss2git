@@ -208,6 +208,8 @@ namespace Hpdi.Vss2Git
 
                 statusTimer.Enabled = false;
                 goButton.Enabled = true;
+
+                MessageBox.Show($"Export completed!{Environment.NewLine}{Environment.NewLine}Runtime: {elstr}");
             }
 
             var exceptions = workQueue.FetchExceptions();
