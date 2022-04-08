@@ -181,8 +181,14 @@ namespace Hpdi.Vss2Git
         private void statusTimer_Tick(object sender, EventArgs e)
         {
             statusLabel.Text = workQueue.LastStatus ?? "Idle";
-            timeLabel.Text = string.Format("Elapsed: {0:HH:mm:ss}",
-                new DateTime(workQueue.ActiveTime.Ticks));
+            var elapsed = new TimeSpan(workQueue.ActiveTime.Ticks);
+
+            var elstr = elapsed.ToString(@"hh\:mm\:ss");
+
+            if (elapsed.Ticks >= TimeSpan.TicksPerDay)
+                elstr = $"{elapsed.Days}d {elapsed:hh\\:mm\\:ss}";
+
+            timeLabel.Text = $"Elapsed: {elstr}";
 
             if (revisionAnalyzer != null)
             {
